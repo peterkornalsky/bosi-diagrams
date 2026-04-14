@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant MO as Middle Office
+    participant BO as BO (Integration API)
+    participant SNS as SNS / EventBridge
+    participant SQS as SQS (BOSI Queue)
+    participant BOSI as BOSI Service
+    participant SI as S&I Platform
+
+    MO->>BO: New dossier with S&I account
+    BO->>BO: Create Credit + Related Product<br/>+ calculate initial premium
+    BO->>SNS: Publish credit.created event
+    SNS->>SQS: Route via EventBridge rule
+    SQS->>BOSI: Consume message
+    Note over BOSI: Account Orchestrator
+    BOSI->>BO: GET /api/v2/related-products/{id}
+    BO-->>BOSI: Related Product details
+    BOSI->>BO: GET /api/v2/parties/{partyId}
+    BO-->>BOSI: Party details
+    BOSI->>BO: GET /api/v2/loans/{creditId}
+    BO-->>BOSI: Loan details (incl. premium)
+    Note over BOSI: Transform to S&I format
+    BOSI->>SI: POST /accounts
+    SI-->>BOSI: 201 Created {accountId}
+    Note over SQS: Delete message (ack)

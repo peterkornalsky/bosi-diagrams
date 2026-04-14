@@ -1,0 +1,60 @@
+---
+config:
+  theme: base
+  themeVariables:
+    fontSize: 16px
+    primaryColor: "#e8e0f0"
+    primaryBorderColor: "#9370DB"
+    primaryTextColor: "#333"
+    secondaryColor: "#fffff0"
+    secondaryBorderColor: "#ccc"
+    tertiaryColor: "#f5f5dc"
+---
+block-beta
+  columns 2
+
+  block:BOSI["BOSI Scope (All New)"]:1
+    columns 1
+    space
+    B1["SQS Consumer"]
+    space
+    B2["4 Orchestrators"]
+    space
+    B3["2 API Clients"]
+    space
+    B4["Webhook Endpoint"]
+    space
+    B5["OTel + HealthChecks + Polly"]
+    space
+  end
+
+  block:BO["BO Scope (Extend Only)"]:1
+    columns 1
+    space
+    A1["DB: +SiAccountId\n+SiPremiumAmount\n+SiAccountStatus"]
+    space
+    A2["API: +GET related-products\n2 new endpoints"]
+    space
+    A3["UI: Related Products\nconfig changes"]
+    space
+    A4["Premium Calculation\nadjustments"]
+    space
+    A5["Events: +enrich with\nrelatedProductId"]
+    space
+    A6["DD Batch: +include\nSiPremiumAmount"]
+    space
+  end
+
+  style BOSI fill:#fffff0,stroke:#999,stroke-width:2px
+  style BO fill:#fffff0,stroke:#999,stroke-width:2px
+  style B1 fill:#e8e0f0,stroke:#9370DB
+  style B2 fill:#e8e0f0,stroke:#9370DB
+  style B3 fill:#e8e0f0,stroke:#9370DB
+  style B4 fill:#e8e0f0,stroke:#9370DB
+  style B5 fill:#e8e0f0,stroke:#9370DB
+  style A1 fill:#e8e0f0,stroke:#9370DB
+  style A2 fill:#e8e0f0,stroke:#9370DB
+  style A3 fill:#e8e0f0,stroke:#9370DB
+  style A4 fill:#e8e0f0,stroke:#9370DB
+  style A5 fill:#e8e0f0,stroke:#9370DB
+  style A6 fill:#e8e0f0,stroke:#9370DB

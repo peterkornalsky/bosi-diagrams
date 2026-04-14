@@ -1,0 +1,22 @@
+sequenceDiagram
+    participant MO as BO User / MO
+    participant BO as BO (Integration API)
+    participant SNS as SNS / EventBridge
+    participant SQS as SQS (BOSI Queue)
+    participant BOSI as BOSI Service
+    participant SI as S&I Platform
+
+    MO->>BO: Change interest rate on credit
+    BO->>BO: Process mutation<br/>+ calculate new premium
+    BO->>SNS: credit.mutated event
+    SNS->>SQS: Route to BOSI queue
+    SQS->>BOSI: Consume event
+    Note over BOSI: Mutation Orchestrator
+    BOSI->>BO: GET /api/v2/loans/{creditId}
+    BO-->>BOSI: Updated credit details (incl. premium)
+    BOSI->>BO: GET /api/v2/related-products/{rpId}
+    BO-->>BOSI: S&I account details
+    Note over BOSI: Transform mutation data
+    BOSI->>SI: PUT /accounts/{siAccountId}
+    SI-->>BOSI: 200 OK
+    Note over SQS: Delete message (ack)
